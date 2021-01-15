@@ -19,12 +19,6 @@ class ApiClientService
     protected $baseUri = 'https://api.gamebetr.com';
 
     /**
-     * Domain id.
-     * @var int
-     */
-    protected $domainId;
-
-    /**
      * Class constructor.
      * @param array $attributes
      * @return void
@@ -36,9 +30,6 @@ class ApiClientService
         }
         if (isset($attributes['baseUri'])) {
             $this->setBaseUri($attributes['baseUri']);
-        }
-        if (isset($attributes['domainId'])) {
-            $this->setDomainId($attributes['domainId']);
         }
     }
 
@@ -95,45 +86,18 @@ class ApiClientService
     }
 
     /**
-     * Set domain id.
-     * @param int $domainId
-     * @return self
-     */
-    public function setDomainId(int $domainId = null) : self
-    {
-        $this->domainId = $domainId;
-
-        return $this;
-    }
-
-    /**
-     * Get domain id.
-     * @return int|null
-     */
-    public function getDomainId() : ?int
-    {
-        return $this->domainId;
-    }
-
-    /**
-     * *************
-     * API ENDPOINTS.
-     * *************
+     * END USER ACCOUNT ENDPOINTS.
      */
 
     /**
      * Login.
      * @param string $email
      * @param string $password
-     * @param int $domainId
      * @return \stdClass
      */
-    public function login(string $email, string $password, int $domainId = null)
+    public function login(string $email, string $password)
     {
-        if ($domainId) {
-            $this->setDomainId($domainId);
-        }
-        $apiToken = $this->request('POST', '/api/v1/login', ['domain_id' => $this->getDomainId(), 'email' => $email, 'password' => $password]);
+        $apiToken = $this->request('POST', '/api/v1/user/login', ['email' => $email, 'password' => $password]);
 
         return json_decode($apiToken);
     }
@@ -145,7 +109,7 @@ class ApiClientService
      */
     public function me() : stdClass
     {
-        $me = $this->request('GET', '/api/v1/me', [], true);
+        $me = $this->request('GET', '/api/v1/user', [], true);
 
         return json_decode($me);
     }
@@ -159,7 +123,7 @@ class ApiClientService
      */
     public function register(string $name, string $email, string $password) : stdClass
     {
-        $user = $this->request('POST', '/api/v1/register', [
+        $user = $this->request('POST', '/api/v1/user/register', [
             'name' => $name,
             'email' => $email,
             'password' => $password,
@@ -175,10 +139,84 @@ class ApiClientService
      */
     public function update(array $attributes = []) : stdClass
     {
-        $user = $this->request('POST', '/api/v1/update', $attributes, true);
+        $user = $this->request('POST', '/api/v1/user/update', $attributes, true);
 
         return json_decode($user);
     }
+
+    /**
+     * Enable 2fa.
+     * @return \stdClass
+     */
+    public function enable2fa() : stdClass
+    {
+        $twoFactor = $this->request('GET', '/api/v1/user/enable2fa', [], true);
+
+        return json_decode($twoFactor);
+    }
+
+    /**
+     * Disable 2fa.
+     * @return void
+     */
+    public function disable2fa()
+    {
+        $this->request('GET', '/api/v1/user/disable2fa', [], true);
+    }
+
+    /**
+     * END USER BANK ENDPOINTS.
+     */
+
+    /**
+     * List accounts.
+     * @return \stdClass
+     */
+    public function listAccounts() : stdClass
+    {
+        $accounts = $this->request('GET', '/api/v1/bank/account', [], true);
+
+        return json_decode($accounts);
+    }
+
+    /**
+     * Get account.
+     * @param string $uuid
+     * @return \stdClass
+     */
+    public function getAccount(string $uuid) : stdClass
+    {
+        $account = $this->request('GET', '/api/v1/bank/account/'.$uuid, [], true);
+
+        return json_decode($account);
+    }
+
+    /**
+     * List transactions.
+     * @return \stdClass
+     */
+    public function listTransactions() : stdClass
+    {
+        $transactions = $this->request('GET', '/api/v1/bank/transaction', [], true);
+
+        return json_decode($transactions);
+    }
+
+    /**
+     * Get transaction.
+     * @param string $uuid
+     * @return \stdClass
+     */
+    public function getTransaction(string $uuid) : stdClass
+    {
+        $transaction = $this->request('GET', '/api/v1/bank/transaction/'.$uuid, [], true);
+
+        return json_decode($transaction);
+    }
+
+    /**
+     * END USER PAYBETR ENDPOINTS.
+     */
 
     /**
      * Make an api request.
@@ -197,7 +235,6 @@ class ApiClientService
         if ($needsAuth) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
                 'Authorization: Bearer '.$this->getApiToken(),
-                'DomainId: '.$this->getDomainId(),
             ]);
         }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

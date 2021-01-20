@@ -368,6 +368,27 @@ class ApiClientService
     }
 
     /**
+     * ADMIN BANK ROUTES.
+     */
+
+    /**
+     * List banks.
+     * @return \stdClass
+     */
+    public function listBanks() : stdClass
+    {
+        return $this->request('GET', '/api/v1/admin/bank');
+    }
+
+    /**
+     * Create bank.
+     * @return \stdClass
+     */
+    public function createBank() : stdClass
+    {
+    }
+
+    /**
      * Make an api request.
      * @param string $method
      * @param string $uri

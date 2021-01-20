@@ -10,17 +10,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Gamebetr\\ApiClientPhp\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Gamebetr\\ApiClientPhp\\Providers\\ApiClientPhpServiceProvider"
-            ],
-            "aliases": {
-                "ApiClient": "Gamebetr\\ApiClientPhp\\Facades\\ApiClient"
-            }
+            "Gamebetr\\ApiClient\\": "src/"
         }
     }
 }

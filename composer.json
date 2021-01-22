@@ -7,7 +7,9 @@
             "email": "sharmeyer@dbd.net"
         }
     ],
-    "require": {},
+    "require": {
+        "guzzlehttp/guzzle": "^6.5|^7.0"
+    },
     "autoload": {
         "psr-4": {
             "Gamebetr\\ApiClient\\": "src/"

@@ -2,6 +2,8 @@
 
 namespace Gamebetr\ApiClient\Contracts;
 
+use Gamebetr\ApiClient\Request;
+
 interface ApiContract
 {
     /**
@@ -28,4 +30,22 @@ interface ApiContract
      * @return array
      */
     public function allowedMethods() : array;
+
+    /**
+     * Request.
+     * @param string $endpoint
+     * @param string $method
+     * @param array $parameters
+     * @param bool $requiresAuth
+     * @param array $headers
+     * @param array $query
+     * @return \Gamebetr\ApiClient\Request
+     */
+    public function request(
+        string $endpoint,
+        string $method = 'GET',
+        array $parameters = [],
+        bool $requiresAuth = true,
+        array $headers = []
+    ) : Request;
 }

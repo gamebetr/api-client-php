@@ -110,4 +110,35 @@ class Api implements ApiContract
     {
         return $this->allowedMethods;
     }
+
+    /**
+     * Request.
+     * @param string $endpoint
+     * @param string $method
+     * @param array $parameters
+     * @param bool $requiresAuth
+     * @param array $headers
+     * @param array $query
+     * @return \Gamebetr\ApiClient\Request
+     */
+    public function request(
+        string $endpoint,
+        string $method = 'GET',
+        array $parameters = [],
+        bool $requiresAuth = true,
+        array $headers = [],
+        array $query = []
+    ) : Request {
+        $request = Request::init($this);
+        $request->method($method);
+        $request->parameters($parameters);
+        $request->requiresAuth($requiresAuth);
+        foreach ($headers as $header => $value) {
+            $request->header($header, $value);
+        }
+        $request->query($query);
+        $request->request($endpoint);
+
+        return $request;
+    }
 }

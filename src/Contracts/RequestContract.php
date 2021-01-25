@@ -65,6 +65,13 @@ interface RequestContract
     public function parameter(string $parameter, $value) : self;
 
     /**
+     * Set query.
+     * @param array $query
+     * @return self
+     */
+    public function query(array $query) : self;
+
+    /**
      * Make request.
      * @param string $endpoint
      * @return self

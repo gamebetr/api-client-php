@@ -45,6 +45,12 @@ class Request implements RequestContract
     public $parameters = [];
 
     /**
+     * Query.
+     * @var array
+     */
+    public $query = [];
+
+    /**
      * Status.
      * @var int
      */
@@ -170,6 +176,18 @@ class Request implements RequestContract
     }
 
     /**
+     * Set query.
+     * @param array $query
+     * @return self
+     */
+    public function query(array $query = []) : self
+    {
+        $this->query = $query;
+
+        return $this;
+    }
+
+    /**
      * Make request.
      * @param string $endpoint
      * @return self
@@ -183,6 +201,7 @@ class Request implements RequestContract
         $client = new Client();
         try {
             $response = $client->request($this->method, $this->api->getUrl($endpoint), [
+                'query' => $this->query,
                 'headers' => $headers,
                 'json' => $this->parameters,
             ]);

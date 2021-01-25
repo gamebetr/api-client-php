@@ -2,6 +2,8 @@
 
 namespace Gamebetr\ApiClient\Contracts;
 
+use stdClass;
+
 interface RequestContract
 {
     /**
@@ -83,7 +85,7 @@ interface RequestContract
 
     /**
      * Get response.
-     * @return string|null
+     * @return \stdClass|null
      */
-    public function getResponse() : ?string;
+    public function getResponse() : ?stdClass;
 }

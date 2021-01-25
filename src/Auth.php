@@ -2,7 +2,9 @@
 
 namespace Gamebetr\ApiClient;
 
+use Exception;
 use Gamebetr\ApiClient\Contracts\RequestContract;
+use Gamebetr\ApiClient\Models\ApiToken;
 
 class Auth
 {
@@ -10,7 +12,7 @@ class Auth
      * Request.
      * @var \Gamebetr\ApiClient\Contracts\RequestContract
      */
-    protected $request;
+    public $request;
 
     /**
      * Class constructor.
@@ -40,14 +42,18 @@ class Auth
      */
     public function login(string $email, string $password)
     {
-        return $this->request
-                    ->requiresAuth(false)
-                    ->method('POST')
-                    ->parameters([
-                        'email' => $email,
-                        'password' => $password,
-                    ])
-                    ->request('user/login')
-                    ->getResponse();
+        if (! $response = $this->request
+            ->requiresAuth(false)
+            ->method('POST')
+            ->parameters([
+                'email' => $email,
+                'password' => $password,
+            ])
+            ->request('user/login')
+            ->getResponse()) {
+            throw new Exception($this->response->getReason(), $this->response->getStatus());
+        }
+
+        return new ApiToken($response->data);
     }
 }

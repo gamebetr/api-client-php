@@ -7,6 +7,7 @@ use Gamebetr\ApiClient\Contracts\ApiContract;
 use Gamebetr\ApiClient\Contracts\RequestContract;
 use Gamebetr\ApiClient\Exceptions\MethodNotAllowed;
 use GuzzleHttp\Client;
+use stdClass;
 
 class Request implements RequestContract
 {
@@ -216,10 +217,10 @@ class Request implements RequestContract
 
     /**
      * Get response.
-     * @return string|null
+     * @return \stdClass|null
      */
-    public function getResponse() : ?string
+    public function getResponse() : ?stdClass
     {
-        return $this->response;
+        return json_decode($this->response);
     }
 }

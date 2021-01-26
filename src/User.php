@@ -19,6 +19,19 @@ class User extends ApiObject
     }
 
     /**
+     * Login.
+     * @param string $email
+     * @param string $password
+     * @return \Gamebetr\ApiClient\ApiToken
+     */
+    public function login(string $email, string $password)
+    {
+        $request = $this->api->request('user/login', 'POST', ['email' => $email, 'password' => $password], false);
+
+        return new ApiToken($this->api, $request->getResponse()->data);
+    }
+
+    /**
      * Register.
      * @param string $name
      * @param string $email
@@ -64,5 +77,14 @@ class User extends ApiObject
     public function disable2fa()
     {
         $this->api->request('user/disable2fa');
+    }
+
+    /**
+     * List.
+     * @return \Gamebetr\ApiClient\Collection
+     */
+    public function list()
+    {
+        return new Collection($this->api, 'user/list', 100, 0, get_class($this));
     }
 }

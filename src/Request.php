@@ -180,9 +180,11 @@ class Request implements RequestContract
      * @param array $query
      * @return self
      */
-    public function query(array $query = []) : self
+    public function query(array $query = null) : self
     {
-        $this->query = $query;
+        if ($query) {
+            $this->query = $query;
+        }
 
         return $this;
     }

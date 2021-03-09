@@ -23,6 +23,24 @@ class Api implements ApiContract
     ];
 
     /**
+     * Filters.
+     * @var array
+     */
+    protected $filters = [];
+
+    /**
+     * Sorts.
+     * @var array
+     */
+    protected $sorts = [];
+
+    /**
+     * Includes.
+     * @var array
+     */
+    protected $includes = [];
+
+    /**
      * Class constructor.
      * @param array $attributes
      * @return void
@@ -112,6 +130,111 @@ class Api implements ApiContract
     }
 
     /**
+     * Add filter.
+     * @param string $column
+     * @param string $filter
+     * @return self
+     */
+    public function addFilter(string $column, string $filter) : self
+    {
+        $this->filters[$column] = $filter;
+
+        return $this;
+    }
+
+    /**
+     * Remove filter
+     * @param string $column
+     * @return self
+     */
+    public function removeFilter(string $column) : self
+    {
+        if (isset($this->filters[$column])) {
+            unset($this->filters[$column]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add include.
+     * @param string $include
+     * @return self
+     */
+    public function addInclude(string $include) : self
+    {
+        if (!in_array($include, $this->includes)) {
+            $this->includes[] = $include;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove include.
+     * @param string $include
+     * @return self
+     */
+    public function removeInclude(string $include) : self
+    {
+        if ($index = array_search($include, $this->includes)) {
+            unset($this->includes[$index]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add sort.
+     * @param string $sort
+     * @return self
+     */
+    public function addSort(string $sort) : self
+    {
+        if (!in_array($sort, $this->sorts)) {
+            $this->sorts[] = $sort;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove sort.
+     * @param string $sort
+     * @return self
+     */
+    public function removeSort(string $sort) : self
+    {
+        if ($index = array_search($sort, $this->sorts)) {
+            unset($this->sorts[$index]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Build query.
+     * @return array
+     */
+    public function buildQuery() : array
+    {
+        $query = [];
+        if (!empty($this->filters)) {
+            foreach ($this->filters as $column => $filter) {
+                $query['filter'][$column] = $filter;
+            }
+        }
+        if (!empty($this->includes)) {
+            $query['include'] = implode(',', $this->includes);
+        }
+        if (!empty($this->sorts)) {
+            $query['sort'] = implode(',', $this->sorts);
+        }
+
+        return $query;
+    }
+
+    /**
      * Request.
      * @param string $endpoint
      * @param string $method
@@ -132,6 +255,7 @@ class Api implements ApiContract
         $request = Request::init($this);
         $request->method($method);
         $request->parameters($parameters);
+        $request->query($this->buildQuery());
         $request->requiresAuth($requiresAuth);
         foreach ($headers as $header => $value) {
             $request->header($header, $value);

@@ -69,7 +69,7 @@ interface RequestContract
      * @param array $query
      * @return self
      */
-    public function query(array $query) : self;
+    public function query(array $query = null) : self;
 
     /**
      * Make request.

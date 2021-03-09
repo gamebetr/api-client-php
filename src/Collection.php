@@ -21,6 +21,12 @@ class Collection implements Countable, Iterator
     protected $endpoint;
 
     /**
+     * Query.
+     * @var array
+     */
+    protected $query;
+
+    /**
      * Limit.
      * @var int
      */
@@ -31,12 +37,6 @@ class Collection implements Countable, Iterator
      * @var int
      */
     protected $offset = 0;
-
-    /**
-     * Object class.
-     * @var string
-     */
-    protected $objectClass;
 
     /**
      * Items.
@@ -53,15 +53,13 @@ class Collection implements Countable, Iterator
     public function __construct(
         ApiContract $api,
         string $endpoint,
-        int $limit,
-        int $offset,
-        string $objectClass
+        array $query
     ) {
         $this->api = $api;
         $this->endpoint = $endpoint;
-        $this->limit = $limit;
-        $this->offset = $offset;
-        $this->objectClass = $objectClass;
+        $this->query = $query;
+        // $this->limit = 100;
+        // $this->offset = 0;
         $this->fill();
     }
 
@@ -115,9 +113,15 @@ class Collection implements Countable, Iterator
      */
     private function fill()
     {
-        $request = $this->api->request($this->endpoint, 'GET', [], true, [], ['limit' => $this->limit, 'offset' => $this->offset]);
+        // $request = $this->api->request($this->endpoint, 'GET', [], true, [], ['limit' => $this->limit, 'offset' => $this->offset, 'include' => 'images']);
+        $query = ['limit' => $this->limit, 'offset' => $this->offset];
+        if (!empty($this->query)) {
+            $query += $this->query;
+        }
+        $request = $this->api->request($this->endpoint, 'GET', [], true, [], $query);
         foreach ($request->getResponse()->data as $apiObject) {
-            $this->items[] = new $this->objectClass($this->api, $apiObject);
+            // removed objectClass to allow tags and related arrays to be included in results
+            $this->items[] = $apiObject;
         }
     }
 

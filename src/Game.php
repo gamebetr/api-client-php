@@ -8,34 +8,36 @@ class Game extends ApiObject
 {
     /**
      * Find game
-     * @param $uuid
+     * @param string $uuid
      * @return self
      */
     public function find(string $uuid) : self
     {
-        $request = $this->api->request('game-center/game/'.$uuid);
+        $request = $this->api->request('gamecenter/game/' . $uuid);
         $this->fill($request->getResponse()->data);
 
         return $this;
     }
 
     /**
-     * List providers.
+     * List games.
+     * @param array $query
      * @return \Gamebetr\ApiClient\Collection
      */
-    public function list() : Collection
+    public function list(array $query = []) : Collection
     {
-        return new Collection($this->api, 'game-center/game', 100, 0, get_class($this));
+        return new Collection($this->api, 'gamecenter/game', $query);
     }
 
     /**
      * Launch game.
-     * @param array $parameters
+     * @param string $uuid
+     * @param array $query
      * @return string
      */
-    public function launch(array $parameters = [])
+    public function launch(string $uuid, array $query = [])
     {
-        $request = $this->api->request('game-center/launch', 'POST', $parameters);
+        $request = $this->api->request('gamecenter/game/' . $uuid . '/launch?' . http_build_query($query));
 
         return $request->getResponse()->data;
     }

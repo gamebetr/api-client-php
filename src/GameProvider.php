@@ -23,8 +23,8 @@ class GameProvider extends ApiObject
      * List providers.
      * @return \Gamebetr\ApiClient\Collection
      */
-    public function list() : Collection
+    public function list(array $query = []) : Collection
     {
-        return new Collection($this->api, 'game-center/provider', 100, 0, get_class($this));
+        return new Collection($this->api, 'gamecenter/provider', $query);
     }
 }

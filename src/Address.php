@@ -23,9 +23,9 @@ class Address extends ApiObject
      * List addresses.
      * @return \Gamebetr\ApiClient\Collection
      */
-    public function list() : Collection
+    public function list(array $query = []) : Collection
     {
-        return new Collection($this->api, 'paybetr/address', 100, 0, get_class($this));
+        return new Collection($this->api, 'paybetr/address', $query);
     }
 
     /**

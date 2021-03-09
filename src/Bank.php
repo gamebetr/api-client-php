@@ -23,9 +23,9 @@ class Bank extends ApiObject
      * List accounts.
      * @return \Gamebetr\ApiClient\Collection
      */
-    public function list() : Collection
+    public function list(array $query = []) : Collection
     {
-        return new Collection($this->api, 'bank', 100, 0, get_class($this));
+        return new Collection($this->api, 'bank', $query);
     }
 
     /**

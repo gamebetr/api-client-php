@@ -4,17 +4,17 @@ namespace Gamebetr\ApiClient\Exceptions;
 
 use Gamebetr\ApiClient\Abstracts\BaseException;
 
-class InvalidApiToken extends BaseException
+class InvalidMethod extends BaseException
 {
     /**
      * Message.
      * @var string
      */
-    protected string $message = 'Invalid API token';
+    protected $message = 'Invalid method';
 
     /**
      * Code.
      * @var int
      */
-    protected int $code = 401;
+    protected $code = 500;
 }

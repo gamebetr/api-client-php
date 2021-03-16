@@ -14,7 +14,6 @@ class User extends BaseType
         'login' => [
             'endpoint' => 'user/login',
             'method' => 'POST',
-            'return_type' => 'authorizationToken',
             'requires_authentication' => false,
             'required_parameters' => [
                 'email',
@@ -35,6 +34,41 @@ class User extends BaseType
             'endpoint' => 'user',
             'method' => 'GET',
             'requires_authentication' => true,
+        ],
+        'enable2fa' => [
+            'endpoint' => 'user/enable2fa',
+            'method' => 'GET',
+            'requires_authentication' => true,
+        ],
+        'disable2fa' => [
+            'endpoint' => 'user/disable2fa',
+            'method' => 'GET',
+            'requires_authentication' => true,
+        ],
+        'update' => [
+            'endpoint' => 'user/update',
+            'method' => 'POST',
+            'requires_authentication' => true,
+            'optional_parameters' => [
+                'name',
+                'email',
+                'password',
+            ],
+        ],
+        'list' => [
+            'endpoint' => 'user/list',
+            'method' => 'GET',
+            'requires_authentication' => true,
+        ],
+        'create' => [
+            'endpoint' => 'user/create',
+            'method' => 'POST',
+            'requires_authentication' => true,
+            'required_parameters' => [
+                'name',
+                'email',
+                'password',
+            ],
         ],
     ];
 }

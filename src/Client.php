@@ -8,8 +8,10 @@ use Gamebetr\ApiClient\Contracts\Config;
 use Gamebetr\ApiClient\Contracts\Type;
 use Gamebetr\ApiClient\Exceptions\InvalidApiToken;
 use Gamebetr\ApiClient\Exceptions\InvalidType;
+use Gamebetr\ApiClient\Utility\Type as UtilityType;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\RequestException;
 
 class Client
 {
@@ -58,12 +60,7 @@ class Client
         if (isset($requestOptions['requires_authentication'])) {
             $requiresAuth = filter_var($requestOptions['requires_authentication'], FILTER_VALIDATE_BOOL);
         }
-        $response = $this->request($requestOptions['endpoint'], $requestOptions['method'], $type, $requiresAuth);
-        $data = json_decode($response->getBody()->getContents());
-        if (!isset($requestOptions['return_type'])) {
-            return get_class($type)::init($data);
-        }
-        return Types::init()->{$requestOptions['return_type']}::init($data);
+        return $this->request($requestOptions['endpoint'], $requestOptions['method'], $type, $requiresAuth);
     }
 
     /**
@@ -80,13 +77,34 @@ class Client
                 'Content-Type' => 'application/vnd.api+json',
             ],
             'json' => $apiObject->attributes,
-            'http_errors' => false,
         ];
         if ($requiresAuth) {
             $options['headers']['Authorization'] = 'Bearer '.$this->api->apiToken;
         }
         $url = rtrim($this->api->baseUri, '/').'/'.ltrim($endpoint, '/');
         $client = new GuzzleClient();
-        return $client->request($method, $url, $options);
+        try {
+            $response = $client->request($method, $url, $options);
+            return UtilityType::make($response->getBody()->getContents());
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                return UtilityType::make([
+                    'type' => 'error',
+                    'attributes' => [
+                        'message' => $e->getMessage(),
+                        'code' => $e->getCode(),
+                        'response' => $e->getResponse(),
+                    ],
+                ]);
+            } else {
+                return UtilityType::make([
+                    'type' => 'error',
+                    'attributes' => [
+                        'message' => $e->getMessage(),
+                        'code' => $e->getCode(),
+                    ],
+                ]);
+            }
+        }
     }
 }

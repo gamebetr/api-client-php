@@ -82,6 +82,12 @@ class Client
     protected $offset;
 
     /**
+     * Raw response.
+     * @var string
+     */
+    protected $response;
+
+    /**
      * Class constructor.
      * @param \Gamebetr\ApiClient\Contracts\Config $api
      * @return void
@@ -261,7 +267,17 @@ class Client
                 ];
             }
         }
+        $this->response = $data;
         $this->reset();
         return UtilityType::make($data);
+    }
+
+    /**
+     * Get raw response.
+     * @return string|null
+     */
+    public function getRawResponse() : ?string
+    {
+        return $this->response;
     }
 }

@@ -75,7 +75,7 @@ abstract class BaseType implements Type
         if (isset($data->id)) {
             $this->id = $data->id;
         }
-        if (isset($data->type)) {
+        if (isset($data->type) && !$this->type) {
             $this->type = $data->type;
         }
         if (isset($data->attributes)) {
@@ -83,6 +83,11 @@ abstract class BaseType implements Type
         }
         if (isset($data->relationships)) {
             foreach ($data->relationships as $relation => $data) {
+                $this->relationships[$relation] = UtilityType::make($data);
+            }
+        }
+        if (isset($data->related)) {
+            foreach ($data->related as $relation => $data) {
                 $this->relationships[$relation] = UtilityType::make($data);
             }
         }

@@ -24,11 +24,11 @@ class Type
         if (is_array($data)) {
             $data = json_decode(json_encode($data));
         }
-        if (!is_object($data)) {
-            return new Error([
-                'message' => 'Could not decode data',
-            ]);
-        }
+        //if (!is_object($data)) {
+        //return new Error([
+        //'message' => 'Could not decode data',
+        //]);
+        //}
         if (isset($data->data)) {
             $data = $data->data;
         }

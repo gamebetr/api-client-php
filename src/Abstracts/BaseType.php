@@ -4,7 +4,7 @@ namespace Gamebetr\ApiClient\Abstracts;
 
 use Gamebetr\ApiClient\Contracts\Type;
 use Gamebetr\ApiClient\Exceptions\InvalidMethod;
-use stdClass;
+use Gamebetr\ApiClient\Utility\Type as UtilityType;
 
 abstract class BaseType implements Type
 {
@@ -83,7 +83,7 @@ abstract class BaseType implements Type
         }
         if (isset($data->relationships)) {
             foreach ($data->relationships as $relation => $data) {
-                $this->relationships[$relation] = new static($data);
+                $this->relationships[$relation] = UtilityType::make($data);
             }
         }
         if (isset($data->links)) {

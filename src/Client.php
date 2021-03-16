@@ -141,7 +141,7 @@ class Client
             throw new InvalidType();
         }
         if (!$type instanceof Type) {
-            throw new InvalidType();
+            $type = UtilityType::make(['type' => $type]);
         }
         $requestOptions = call_user_func_array([$type, $name], $arguments);
         if (isset($requestOptions['endpoint'])) {

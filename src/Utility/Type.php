@@ -5,7 +5,6 @@ namespace Gamebetr\ApiClient\Utility;
 use Gamebetr\ApiClient\Config\Types;
 use Gamebetr\ApiClient\Contracts\Type as TypeContract;
 use Gamebetr\ApiClient\Types\Collection;
-use Gamebetr\ApiClient\Types\Error;
 use Gamebetr\ApiClient\Types\Generic;
 
 class Type

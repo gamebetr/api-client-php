@@ -1,18 +1,42 @@
 {
     "name": "gamebetr/api-client-php",
     "description": "Gamebetr php api client package",
+    "keywords": [
+        "gamebetr",
+        "api-client-php"
+    ],
+    "homepage": "https://github.com/gamebetr/api-client-php",
+    "license": "MIT",
     "authors": [
         {
             "name": "Steve Harmeyer",
-            "email": "sharmeyer@dbd.net"
+            "email": "sharmeyer@dbd.net",
+            "homepage": "https://gamebetr.com",
+            "role": "Developer"
         }
     ],
     "require": {
+        "php": "^7.4|^8.0",
         "guzzlehttp/guzzle": "^6.5|^7.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.18",
+        "phpunit/phpunit": "^9.5.1"
     },
     "autoload": {
         "psr-4": {
             "Gamebetr\\ApiClient\\": "src/"
         }
-    }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Gamebetr\\ApiClient\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

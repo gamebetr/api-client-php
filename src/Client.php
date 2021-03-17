@@ -126,6 +126,7 @@ class Client
         $this->requiresAuth = true;
         $this->limit = null;
         $this->offset = null;
+
         return $this;
     }
 
@@ -143,7 +144,20 @@ class Client
         if (!$type instanceof Type) {
             $type = UtilityType::make(['type' => $type]);
         }
-        $requestOptions = call_user_func_array([$type, $name], $arguments);
+
+        return $this->call($name, $type);
+    }
+
+    /**
+     * Non magic caller.
+     * @param string $method
+     * @param \Gamebetr\ApiClient\Contracts\Type $type
+     * @return self
+     */
+    public function call(string $method, Type $type) : self
+    {
+        $requestOptions = call_user_func([$type, $method]);
+        //$requestOptions = call_user_func_array([$type, $method]);
         if (isset($requestOptions['endpoint'])) {
             $this->endpoint = $requestOptions['endpoint'];
         }
@@ -153,6 +167,8 @@ class Client
         if (isset($requestOptions['requires_authentication'])) {
             $this->requiresAuth = filter_var($requestOptions['requires_authentication'], FILTER_VALIDATE_BOOL);
         }
+        $this->parameters = $type->attributes;
+
         return $this;
     }
 
@@ -165,6 +181,7 @@ class Client
     public function filter(string $column, $filter) : self
     {
         $this->filters[$column] = $filter;
+
         return $this;
     }
 
@@ -176,6 +193,7 @@ class Client
     public function sort(string $sort) : self
     {
         $this->sorts[] = $sort;
+
         return $this;
     }
 
@@ -187,6 +205,7 @@ class Client
     public function include(string $include) : self
     {
         $this->includes[] = $include;
+        
         return $this;
     }
 
@@ -198,6 +217,7 @@ class Client
     public function limit(int $limit) : self
     {
         $this->limit = $limit;
+
         return $this;
     }
 
@@ -209,6 +229,7 @@ class Client
     public function offset(int $offset) : self
     {
         $this->offset = $offset;
+
         return $this;
     }
 
@@ -269,6 +290,7 @@ class Client
         }
         $this->response = $data;
         $this->reset();
+
         return UtilityType::make($data);
     }
 

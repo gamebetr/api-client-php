@@ -8,6 +8,7 @@ use Gamebetr\ApiClient\Exceptions\InvalidApiToken;
 use Gamebetr\ApiClient\Exceptions\InvalidType;
 use Gamebetr\ApiClient\Utility\Type as UtilityType;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 
 class Client
@@ -17,6 +18,12 @@ class Client
      * @var \Gamebetr\ApiClient\Contracts\Config
      */
     protected Config $api;
+
+    /**
+     * Client
+     * @var \GuzzleHttp\ClientInterface
+     */
+    protected ClientInterface $client;
 
     /**
      * Headers.
@@ -90,21 +97,190 @@ class Client
     /**
      * Class constructor.
      * @param \Gamebetr\ApiClient\Contracts\Config $api
+     * @param \GuzzleHttp\ClientInterface $client
      * @return void
      */
-    public function __construct(Config $api)
+    public function __construct(Config $api, ClientInterface $client = null)
     {
-        $this->api = $api;
+        $this->setApi($api);
+        $this->setClient($client);
     }
 
     /**
      * Static constructor.
      * @param \Gamebetr\ApiClient\Contracts\Config $api
+     * @param \GuzzleHttp\ClientInterface $client
      * @return self
      */
-    public static function init(Config $api) : self
+    public static function init(Config $api, ClientInterface $client = null) : self
     {
-        return new static($api);
+        return new static($api, $client);
+    }
+
+    /**
+     * Get api.
+     * @return \Gamebetr\ApiClient\Contracts\Config
+     */
+    public function getApi() : Config
+    {
+        return $this->api;
+    }
+
+    /**
+     * Set api.
+     * @param \Gamebetr\ApiClient\Contracts\Config
+     * @return self
+     */
+    public function setApi(Config $api) : self
+    {
+        $this->api = $api;
+
+        return $this;
+    }
+
+    /**
+     * Get client.
+     * @return \GuzzleHttp\ClientInterface
+     */
+    public function getClient() : ClientInterface
+    {
+        return $this->client;
+    }
+
+    /**
+     * Set client
+     * @param \GuzzleHttp\ClientInterface $client
+     * @return self
+     */
+    public function setClient(ClientInterface $client = null) : self
+    {
+        $this->client = $client ?? new GuzzleClient();
+
+        return $this;
+    }
+
+    /**
+     * Get request headers.
+     * @return array
+     */
+    public function getRequestHeaders() : array
+    {
+        return $this->headers;
+    }
+
+    /**
+     * Get request header.
+     * @param string $header
+     * @return string|null
+     */
+    public function getRequestHeader(string $header) : ?string
+    {
+        if (!isset($this->headers[$header])) {
+            return null;
+        }
+        return $this->headers[$header];
+    }
+
+    /**
+     * Set request headers.
+     * @param array $headers
+     * @return self
+     */
+    public function setRequestHeaders(array $headers = []) : self
+    {
+        $this->headers = $headers;
+
+        return $this;
+    }
+
+    /**
+     * Set request header.
+     * @param string $header
+     * @param string $value
+     * @return self
+     */
+    public function setRequestHeader(string $header, string $value) : self
+    {
+        $this->headers[$header] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get request method
+     * @return string|null
+     */
+    public function getRequestMethod() : ?string
+    {
+        return $this->method;
+    }
+
+    /**
+     * Set request method
+     * @param string $method
+     * @return self
+     */
+    public function setRequestMethod(string $method = null) : self
+    {
+        $this->method = $method;
+        return $this;
+    }
+
+    /**
+     * Get request parameters.
+     * @return array
+     */
+    public function getRequestParameters() : array
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * Get request parameter.
+     * @param string $parameter
+     * @return mixed
+     */
+    public function getRequestParameter(string $parameter)
+    {
+        if (!isset($this->parameters[$parameter])) {
+            return null;
+        }
+
+        return $this->parameters[$parameter];
+    }
+
+    /**
+     * Set request parameters.
+     * @param array $parameters
+     * @return self
+     */
+    public function setRequestParameters(array $parameters = []) : self
+    {
+        $this->parameters = $parameters;
+
+        return $this;
+    }
+
+    /**
+     * Set request parameter.
+     * @param string $parameter
+     * @param mixed $value
+     * @return self
+     */
+    public function setRequestParameter(string $parameter, $value) : self
+    {
+        $this->parameters[$parameter] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get endpoint.
+     * @return string|null
+     */
+    public function getEndpoint() : ?string
+    {
+        return $this->endpoint;
     }
 
     /**
@@ -117,8 +293,8 @@ class Client
             'Accept' => 'application/vnd.api+json',
             'Content-Type' => 'application/vnd.api+json',
         ];
-        $this->parameters = [];
         $this->method = null;
+        $this->parameters = [];
         $this->endpoint = null;
         $this->filters = [];
         $this->includes = [];
@@ -265,10 +441,8 @@ class Client
             $options['headers']['Authorization'] = 'Bearer '.$this->api->apiToken;
         }
         $url = rtrim($this->api->baseUri, '/').'/'.ltrim($this->endpoint, '/');
-        $client = new GuzzleClient();
-
         try {
-            $data = $client->request($this->method, $url, $options)->getBody()->getContents();
+            $data = $this->client->request($this->method, $url, $options)->getBody()->getContents();
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
                 $data = [

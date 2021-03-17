@@ -40,4 +40,17 @@ interface Type
      * @return void
      */
     public function __set($name, $value);
+
+    /**
+     * Methods.
+     * @return array
+     */
+    public function methods() : array;
+
+    /**
+     * Method.
+     * @param string $method
+     * @return array
+     */
+    public function method(string $method) : array;
 }

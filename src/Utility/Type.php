@@ -38,9 +38,10 @@ class Type
         if (is_array($data)) {
             $type = Collection::class;
         }
-        if (!$type) {
+        if (! $type) {
             $type = Generic::class;
         }
+
         return $type::init($data);
     }
 }

@@ -34,8 +34,8 @@
         }
     },
     "scripts": {
-        "test": "phpunit",
-        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+        "test": "./vendor/bin/phpunit",
+        "format": "./vendor/bin/php-cs-fixer fix --allow-risky=yes"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

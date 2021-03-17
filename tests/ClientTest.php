@@ -2,6 +2,8 @@
 
 namespace Gamebetr\ApiClient\Tests;
 
-class ClientTest extends \PHPUnit_Framework_TestCas
+use PHPUnit\Framework\TestCase;
+
+class ClientTest extends TestCase
 {
 }

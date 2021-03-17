@@ -47,7 +47,7 @@ class Collection implements Type
      */
     public function parseData($data = null) : self
     {
-        if (!is_array($data)) {
+        if (! is_array($data)) {
             return $this;
         }
         foreach ($data as $item) {
@@ -58,6 +58,7 @@ class Collection implements Type
                 $this->items[] = $type;
             }
         }
+
         return $this;
     }
 
@@ -94,9 +95,29 @@ class Collection implements Type
      */
     public function __call($name, $arguments)
     {
-        if (!isset($this->methods[$name])) {
+        if (! isset($this->methods[$name])) {
             throw new InvalidMethod();
         }
+
         return $this->methods[$name];
+    }
+
+    /**
+     * Methods.
+     * @return array
+     */
+    public function methods() : array
+    {
+        return [];
+    }
+
+    /**
+     * Method.
+     * @param string $method
+     * @return array
+     */
+    public function method(string $method) : array
+    {
+        throw new InvalidMethod();
     }
 }

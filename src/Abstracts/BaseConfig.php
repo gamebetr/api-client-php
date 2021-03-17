@@ -14,7 +14,7 @@ abstract class BaseConfig implements Config
 
     /**
      * Class constructor.
-     * @var array $config
+     * @var array
      * @return void
      */
     public function __construct(array $config = [])
@@ -26,7 +26,7 @@ abstract class BaseConfig implements Config
 
     /**
      * Static constructor.
-     * @var array $config
+     * @var array
      * @return self
      */
     public static function init(array $config = []) : self

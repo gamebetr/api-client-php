@@ -6,14 +6,14 @@ interface Config
 {
     /**
      * Class constructor.
-     * @var array $config
+     * @var array
      * @return void
      */
     public function __construct(array $config = []);
 
     /**
      * Static constructor.
-     * @var array $config
+     * @var array
      * @return self
      */
     public static function init(array $config = []) : self;

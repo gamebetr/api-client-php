@@ -67,6 +67,7 @@ abstract class BaseType implements Type
     {
         if (is_array($data)) {
             $this->attributes = $data;
+
             return $this;
         }
         if (isset($data->data)) {
@@ -75,7 +76,7 @@ abstract class BaseType implements Type
         if (isset($data->id)) {
             $this->id = $data->id;
         }
-        if (isset($data->type) && !$this->type) {
+        if (isset($data->type) && ! $this->type) {
             $this->type = $data->type;
         }
         if (isset($data->attributes)) {
@@ -133,9 +134,30 @@ abstract class BaseType implements Type
      */
     public function __call($name, $arguments)
     {
-        if (!isset($this->methods[$name])) {
+        $method = $this->method($name);
+        $method['endpoint'] = str_replace('{id}', $this->id, $method['endpoint']);
+        return $method;
+    }
+
+    /**
+     * Methods.
+     * @return array
+     */
+    public function methods() : array
+    {
+        return array_keys($this->methods);
+    }
+
+    /**
+     * Method.
+     * @param string $method
+     * @return array
+     */
+    public function method(string $method) : array
+    {
+        if (!isset($this->methods[$method])) {
             throw new InvalidMethod();
         }
-        return $this->methods[$name];
+        return $this->methods[$method];
     }
 }

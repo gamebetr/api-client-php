@@ -60,6 +60,11 @@ class User extends BaseType
             'method' => 'GET',
             'requires_authentication' => true,
         ],
+        'find' => [
+            'endpoint' => 'user/{id}',
+            'method' => 'GET',
+            'requires_authentication' => true,
+        ],
         'create' => [
             'endpoint' => 'user/create',
             'method' => 'POST',

@@ -138,10 +138,10 @@ class Client
      */
     public function __call($name, $arguments) : self
     {
-        if (!$type = array_shift($arguments)) {
+        if (! $type = array_shift($arguments)) {
             throw new InvalidType();
         }
-        if (!$type instanceof Type) {
+        if (! $type instanceof Type) {
             $type = UtilityType::make(['type' => $type]);
         }
 
@@ -243,13 +243,13 @@ class Client
             'headers' => $this->headers,
             'json' => $this->parameters,
         ];
-        if (!empty($this->filters)) {
+        if (! empty($this->filters)) {
             $options['query']['filter'] = $this->filters;
         }
-        if (!empty($this->includes)) {
+        if (! empty($this->includes)) {
             $options['query']['include'] = implode(',', $this->includes);
         }
-        if (!empty($this->sorts)) {
+        if (! empty($this->sorts)) {
             $options['query']['sort'] = implode(',', $this->sorts);
         }
         if ($this->limit) {
@@ -259,13 +259,14 @@ class Client
             $options['query']['offset'] = $this->offset;
         }
         if ($this->requiresAuth) {
-            if (!$this->api->apiToken) {
+            if (! $this->api->apiToken) {
                 throw new InvalidApiToken();
             }
             $options['headers']['Authorization'] = 'Bearer '.$this->api->apiToken;
         }
         $url = rtrim($this->api->baseUri, '/').'/'.ltrim($this->endpoint, '/');
         $client = new GuzzleClient();
+
         try {
             $data = $client->request($this->method, $url, $options)->getBody()->getContents();
         } catch (RequestException $e) {

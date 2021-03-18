@@ -2,8 +2,10 @@
 
 namespace Gamebetr\ApiClient;
 
+use Gamebetr\ApiClient\Config\Types;
 use Gamebetr\ApiClient\Contracts\Config;
 use Gamebetr\ApiClient\Contracts\Type;
+use Gamebetr\ApiClient\Exceptions\InvalidApi;
 use Gamebetr\ApiClient\Exceptions\InvalidApiToken;
 use Gamebetr\ApiClient\Exceptions\InvalidType;
 use Gamebetr\ApiClient\Utility\Type as UtilityType;
@@ -284,6 +286,94 @@ class Client
     }
 
     /**
+     * Set endpoint
+     * @param string $endpoint
+     * @return self
+     */
+    public function setEndpoint(string $endpoint = null) : self
+    {
+        $this->endpoint = $endpoint;
+
+        return $this;
+    }
+
+    /**
+     * Get url.
+     * @return string
+     */
+    public function getUrl() : string
+    {
+        if (!$baseUri = $this->api->baseUri) {
+            throw new InvalidApi();
+        }
+
+        return rtrim(rtrim($baseUri, '/').'/'.ltrim($this->getEndpoint(), '/'), '/');
+    }
+
+    /**
+     * Get full url.
+     * @return string
+     */
+    public function getFullUrl() : string
+    {
+        return $this->getUrl().'?'.http_build_query($this->getQuery());
+    }
+
+    /**
+     * Get filters.
+     * @return array
+     */
+    public function getFilters() : array
+    {
+        return $this->filters;
+    }
+
+    /**
+     * Get includes.
+     * @return array
+     */
+    public function getIncludes() : array
+    {
+        return $this->includes;
+    }
+
+    /**
+     * Get sorts.
+     * @return array
+     */
+    public function getSorts() : array
+    {
+        return $this->sorts;
+    }
+
+    /**
+     * Get requiresAuth.
+     * @return bool
+     */
+    public function getRequiresAuth() : bool
+    {
+        return $this->requiresAuth;
+    }
+
+    /**
+     * Get limit.
+     * @return int|null
+     */
+    public function getLimit() : ?int
+    {
+        return $this->limit;
+    }
+
+    /**
+     * Get offset.
+     * @return int|null
+     */
+    public function getOffset() : ?int
+    {
+        return $this->offset;
+    }
+
+    /**
      * Reset.
      * @return self
      */
@@ -318,7 +408,7 @@ class Client
             throw new InvalidType();
         }
         if (! $type instanceof Type) {
-            $type = UtilityType::make(['type' => $type]);
+            $type = Types::init()->$type::init(array_shift($arguments));
         }
 
         return $this->call($name, $type);
@@ -333,7 +423,6 @@ class Client
     public function call(string $method, Type $type) : self
     {
         $requestOptions = call_user_func([$type, $method]);
-        //$requestOptions = call_user_func_array([$type, $method]);
         if (isset($requestOptions['endpoint'])) {
             $this->endpoint = $requestOptions['endpoint'];
         }
@@ -410,39 +499,50 @@ class Client
     }
 
     /**
+     * Get query.
+     * @return array
+     */
+    public function getQuery() : array
+    {
+        $query = [];
+        if (!empty($this->filters)) {
+            $query['filter'] = $this->filters;
+        }
+        if (!empty($this->includes)) {
+            $query['include'] = implode(',', $this->includes);
+        }
+        if (!empty($this->sorts)) {
+            $query['sort'] = implode(',', $this->sorts);
+        }
+        if ($this->limit) {
+            $query['limit'] = $this->limit;
+        }
+        if ($this->offset) {
+            $query['offset'] = $this->offset;
+        }
+
+        return $query;
+    }
+
+    /**
      * Make an api request.
      * @return \Gamebetr\ApiClient\Contracts\Type
      */
     public function get() : Type
     {
         $options = [
-            'headers' => $this->headers,
-            'json' => $this->parameters,
+            'headers' => $this->getRequestHeaders(),
+            'json' => $this->getRequestParameters(),
+            'query' => $this->getQuery(),
         ];
-        if (! empty($this->filters)) {
-            $options['query']['filter'] = $this->filters;
-        }
-        if (! empty($this->includes)) {
-            $options['query']['include'] = implode(',', $this->includes);
-        }
-        if (! empty($this->sorts)) {
-            $options['query']['sort'] = implode(',', $this->sorts);
-        }
-        if ($this->limit) {
-            $options['query']['limit'] = $this->limit;
-        }
-        if ($this->offset) {
-            $options['query']['offset'] = $this->offset;
-        }
         if ($this->requiresAuth) {
             if (! $this->api->apiToken) {
                 throw new InvalidApiToken();
             }
             $options['headers']['Authorization'] = 'Bearer '.$this->api->apiToken;
         }
-        $url = rtrim($this->api->baseUri, '/').'/'.ltrim($this->endpoint, '/');
         try {
-            $data = $this->client->request($this->method, $url, $options)->getBody()->getContents();
+            $data = $this->client->request($this->getRequestMethod(), $this->getUrl(), $options)->getBody()->getContents();
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
                 $data = [

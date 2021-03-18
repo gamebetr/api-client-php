@@ -135,7 +135,8 @@ abstract class BaseType implements Type
     public function __call($name, $arguments)
     {
         $method = $this->method($name);
-        $method['endpoint'] = str_replace('{id}', $this->id, $method['endpoint']);
+        $method['endpoint'] = $this->parseEndpoint($method['endpoint']);
+        //$method['endpoint'] = str_replace('{id}', $this->id, $method['endpoint']);
         return $method;
     }
 
@@ -159,5 +160,22 @@ abstract class BaseType implements Type
             throw new InvalidMethod();
         }
         return $this->methods[$method];
+    }
+
+    /**
+     * Parse endpoint
+     * @param string $endpoint
+     * @return string
+     */
+    private function parseEndpoint(string $endpoint) : string
+    {
+        $replacements = [
+            '{id}' => $this->id,
+            '{type}' => $this->type,
+        ];
+        foreach ($this->attributes as $attribute => $value) {
+            $replacements['{'.$attribute.'}'] = $value;
+        }
+        return strtr($endpoint, $replacements);
     }
 }

@@ -30,5 +30,17 @@ class Currency extends BaseType
                 'symbol',
             ],
         ],
+        'convert' => [
+            'endpoint' => 'paybetr/currency/{symbol}/convert/{to}/{amount?}',
+            'method' => 'GET',
+            'requires_authentication' => true,
+            'required_parameters' => [
+                'symbol',
+                'to',
+            ],
+            'optional_parameters' => [
+                'amount',
+            ],
+        ],
     ];
 }

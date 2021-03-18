@@ -4,17 +4,17 @@ namespace Gamebetr\ApiClient\Exceptions;
 
 use Gamebetr\ApiClient\Abstracts\BaseException;
 
-class InvalidApi extends BaseException
+class MissingParameter extends BaseException
 {
     /**
      * Message.
      * @var string
      */
-    protected $message = 'Invalid API';
+    protected $message = 'Missing required parameter';
 
     /**
      * Code.
      * @var int
      */
-    protected $code = 500;
+    protected $code = 422;
 }

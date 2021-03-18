@@ -4,6 +4,7 @@ namespace Gamebetr\ApiClient\Abstracts;
 
 use Gamebetr\ApiClient\Contracts\Type;
 use Gamebetr\ApiClient\Exceptions\InvalidMethod;
+use Gamebetr\ApiClient\Exceptions\MissingParameter;
 use Gamebetr\ApiClient\Utility\Type as UtilityType;
 
 abstract class BaseType implements Type
@@ -135,8 +136,15 @@ abstract class BaseType implements Type
     public function __call($name, $arguments)
     {
         $method = $this->method($name);
+        if (isset($method['required_parameters'])) {
+            foreach ($method['required_parameters'] as $parameter) {
+                if (!$this->$parameter) {
+                    throw new MissingParameter('Missing required parameter '.$parameter);
+                }
+            }
+        }
         $method['endpoint'] = $this->parseEndpoint($method['endpoint']);
-        //$method['endpoint'] = str_replace('{id}', $this->id, $method['endpoint']);
+
         return $method;
     }
 
@@ -159,6 +167,7 @@ abstract class BaseType implements Type
         if (!isset($this->methods[$method])) {
             throw new InvalidMethod();
         }
+
         return $this->methods[$method];
     }
 
@@ -171,11 +180,17 @@ abstract class BaseType implements Type
     {
         $replacements = [
             '{id}' => $this->id,
+            '{id?}' => $this->id,
             '{type}' => $this->type,
+            '{type?}' => $this->type,
         ];
         foreach ($this->attributes as $attribute => $value) {
             $replacements['{'.$attribute.'}'] = $value;
+            $replacements['{'.$attribute.'?}'] = $value;
         }
-        return strtr($endpoint, $replacements);
+        $endpoint = strtr($endpoint, $replacements);
+        $endpoint = preg_replace('/\{.*\?\}/', '', $endpoint);
+
+        return $endpoint;
     }
 }

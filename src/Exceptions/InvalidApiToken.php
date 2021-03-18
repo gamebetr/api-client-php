@@ -10,11 +10,11 @@ class InvalidApiToken extends BaseException
      * Message.
      * @var string
      */
-    protected string $message = 'Invalid API token';
+    protected $message = 'Invalid API token';
 
     /**
      * Code.
      * @var int
      */
-    protected int $code = 401;
+    protected $code = 401;
 }

@@ -4,6 +4,7 @@ namespace Gamebetr\ApiClient\Config;
 
 use Gamebetr\ApiClient\Abstracts\BaseConfig;
 use Gamebetr\ApiClient\Types\Account;
+use Gamebetr\ApiClient\Types\Address;
 use Gamebetr\ApiClient\Types\AuthorizationToken;
 use Gamebetr\ApiClient\Types\Bank;
 use Gamebetr\ApiClient\Types\Currency;
@@ -23,6 +24,8 @@ class Types extends BaseConfig
      */
     protected $config = [
         'account' => Account::class,
+        'address' => Address::class,
+        'addresses' => Address::class,
         'authorizationToken' => AuthorizationToken::class,
         'bank' => Bank::class,
         'banks' => Bank::class,

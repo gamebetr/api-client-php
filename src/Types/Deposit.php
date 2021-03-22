@@ -4,13 +4,13 @@ namespace Gamebetr\ApiClient\Types;
 
 use Gamebetr\ApiClient\Abstracts\BaseType;
 
-class Bank extends BaseType
+class Deposit extends BaseType
 {
     /**
      * Type.
      * @var string
      */
-    public $type = 'bank';
+    public $type = 'deposit';
 
     /**
      * Methods.
@@ -18,27 +18,16 @@ class Bank extends BaseType
      */
     protected $methods = [
         'list' => [
-            'endpoint' => 'bank',
+            'endpoint' => 'paybetr/deposit',
             'method' => 'GET',
             'requires_authentication' => true,
         ],
         'find' => [
-            'endpoint' => 'bank/{id}',
+            'endpoint' => 'paybetr/deposit/{id}',
             'method' => 'GET',
             'requires_authentication' => true,
-        ],
-        'create' => [
-            'endpoint' => 'bank',
-            'method' => 'POST',
-            'requires_authentication' => true,
             'required_parameters' => [
-            ]
-        ],
-        'update' => [
-            'endpoint' => 'bank/{id}',
-            'method' => 'PUT',
-            'requires_authentication' => true,
-            'required_parameters' => [
+                'id',
             ],
         ],
     ];

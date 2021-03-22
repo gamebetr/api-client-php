@@ -8,6 +8,7 @@ use Gamebetr\ApiClient\Types\Address;
 use Gamebetr\ApiClient\Types\AuthorizationToken;
 use Gamebetr\ApiClient\Types\Bank;
 use Gamebetr\ApiClient\Types\Currency;
+use Gamebetr\ApiClient\Types\Deposit;
 use Gamebetr\ApiClient\Types\Error;
 use Gamebetr\ApiClient\Types\Game;
 use Gamebetr\ApiClient\Types\Generic;
@@ -15,6 +16,7 @@ use Gamebetr\ApiClient\Types\Provider;
 use Gamebetr\ApiClient\Types\Transaction;
 use Gamebetr\ApiClient\Types\TwoFactor;
 use Gamebetr\ApiClient\Types\User;
+use Gamebetr\ApiClient\Types\Withdrawal;
 
 class Types extends BaseConfig
 {
@@ -33,6 +35,7 @@ class Types extends BaseConfig
         'bank-accounts' => Account::class,
         'currency' => Currency::class,
         'currencies' => Currency::class,
+        'deposit' => Deposit::class,
         'error' => Error::class,
         'game' => Game::class,
         'generic' => Generic::class,
@@ -41,5 +44,7 @@ class Types extends BaseConfig
         'transactions' => Transaction::class,
         'twoFactor' => TwoFactor::class,
         'user' => User::class,
+        'withdrawal' => Withdrawal::class,
+        'withdrawals' => Withdrawal::class,
     ];
 }

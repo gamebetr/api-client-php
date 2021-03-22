@@ -39,4 +39,13 @@ class Type
 
         return $type::init($data);
     }
+
+    /**
+     * List
+     * @return array
+     */
+    public static function list() : array
+    {
+        return array_values(array_unique(Types::init()->getConfig()));
+    }
 }

@@ -67,8 +67,13 @@ abstract class BaseType implements Type
     public function parseData($data = null) : self
     {
         if (is_array($data)) {
-            $this->attributes = $data;
-
+            foreach ($data as $attribute => $value) {
+                if ($attribute == 'id') {
+                    $this->id = $value;
+                } else {
+                    $this->attributes[$attribute] = $value;
+                }
+            }
             return $this;
         }
         if (isset($data->data)) {

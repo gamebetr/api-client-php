@@ -11,6 +11,7 @@ use Gamebetr\ApiClient\Types\Currency;
 use Gamebetr\ApiClient\Types\Deposit;
 use Gamebetr\ApiClient\Types\Error;
 use Gamebetr\ApiClient\Types\Game;
+use Gamebetr\ApiClient\Types\GameTransaction;
 use Gamebetr\ApiClient\Types\Generic;
 use Gamebetr\ApiClient\Types\Provider;
 use Gamebetr\ApiClient\Types\Transaction;
@@ -38,6 +39,8 @@ class Types extends BaseConfig
         'deposit' => Deposit::class,
         'error' => Error::class,
         'game' => Game::class,
+        'gameTransaction' => GameTransaction::class,
+        'gameTransactions' => GameTransaction::class,
         'generic' => Generic::class,
         'provider' => Provider::class,
         'transaction' => Transaction::class,

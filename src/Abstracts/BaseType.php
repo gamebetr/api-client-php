@@ -40,6 +40,12 @@ abstract class BaseType implements Type
     public $links = [];
 
     /**
+     * Init data.
+     * @var mixed
+     */
+    protected $initData;
+
+    /**
      * Class constructor.
      * @param mixed $initData
      * @return void
@@ -66,6 +72,7 @@ abstract class BaseType implements Type
      */
     public function parseData($data = null) : self
     {
+        $this->initData = $data;
         if (is_array($data)) {
             foreach ($data as $attribute => $value) {
                 if ($attribute == 'id') {
@@ -174,6 +181,15 @@ abstract class BaseType implements Type
         }
 
         return $this->methods[$method];
+    }
+
+    /**
+     * Get init data.
+     * @return mixed
+     */
+    public function getInitData()
+    {
+        return $this->initData;
     }
 
     /**

@@ -26,6 +26,9 @@ class Type
         if (isset($data->data)) {
             $data = $data->data;
         }
+        if (isset($data->data)) {
+            $data = $data->data;
+        }
         $type = null;
         if (isset($data->type)) {
             $type = Types::init()->{$data->type};

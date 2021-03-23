@@ -18,18 +18,21 @@ class Address extends BaseType
      */
     protected $methods = [
         'list' => [
-            'endpoint' => 'paybetr/address',
-            'method' => 'GET',
-            'requires_authentication' => true,
-        ],
-        'find' => [
-            'endpoint' => 'paybetr/address/{address}',
+            'endpoint' => 'paybetr/address/{symbol}',
             'method' => 'GET',
             'requires_authentication' => true,
             'required_parameters' => [
-                'address',
+                'symbol',
             ],
         ],
+        //'find' => [
+            //'endpoint' => 'paybetr/address/{address}',
+            //'method' => 'GET',
+            //'requires_authentication' => true,
+            //'required_parameters' => [
+                //'address',
+            //],
+        //],
         'create' => [
             'endpoint' => 'paybetr/address',
             'method' => 'POST',

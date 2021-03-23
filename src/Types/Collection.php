@@ -120,4 +120,49 @@ class Collection implements Type
     {
         throw new InvalidMethod();
     }
+
+    /**
+     * First.
+     * @return Gamebetr\ApiClient\Contracts\Type|null
+     */
+    public function first() : ?Type
+    {
+        return reset($this->items);
+    }
+
+    /**
+     * Current.
+     * @return Gamebetr\ApiClient\Contracts\Type|null
+     */
+    public function current() : ?Type
+    {
+        return current($this->items);
+    }
+
+    /**
+     * Next.
+     * @return Gamebetr\ApiClient\Contracts\Type|null
+     */
+    public function next() : ?Type
+    {
+        return next($this->items);
+    }
+
+    /**
+     * Prev.
+     * @return Gamebetr\ApiClient\Contracts\Type|null
+     */
+    public function prev() : ?Type
+    {
+        return prev($this->items);
+    }
+    
+    /**
+     * Last.
+     * @return Gamebetr\ApiClient\Contracts\Type|null
+     */
+    public function last() : ?Type
+    {
+        return end($this->items);
+    }
 }

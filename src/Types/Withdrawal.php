@@ -39,6 +39,9 @@ class Withdrawal extends BaseType
                 'amount',
                 'address',
             ],
+            'optional_parameters' => [
+                'external_id',
+            ],
         ],
     ];
 }

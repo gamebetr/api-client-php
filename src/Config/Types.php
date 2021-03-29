@@ -6,6 +6,7 @@ use Gamebetr\ApiClient\Abstracts\BaseConfig;
 use Gamebetr\ApiClient\Types\Account;
 use Gamebetr\ApiClient\Types\Address;
 use Gamebetr\ApiClient\Types\AuthorizationToken;
+use Gamebetr\ApiClient\Types\Balance;
 use Gamebetr\ApiClient\Types\Bank;
 use Gamebetr\ApiClient\Types\Currency;
 use Gamebetr\ApiClient\Types\Deposit;
@@ -35,6 +36,8 @@ class Types extends BaseConfig
         'addresses' => Address::class,
         'authorizationToken' => AuthorizationToken::class,
         'authorizationTokens' => AuthorizationToken::class,
+        'balance' => Balance::class,
+        'balances' => Balance::class,
         'bank' => Bank::class,
         'banks' => Bank::class,
         'bank-account' => Account::class,

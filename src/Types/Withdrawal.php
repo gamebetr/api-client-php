@@ -43,5 +43,13 @@ class Withdrawal extends BaseType
                 'external_id',
             ],
         ],
+        'confirm' => [
+            'endpoint' => 'paybetr/withdrawal/{id}/confirm',
+            'method' => 'POST',
+            'requires_authentication' => true,
+            'required_parameters' => [
+                'token',
+            ],
+        ],
     ];
 }

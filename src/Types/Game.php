@@ -26,10 +26,15 @@ class Game extends BaseType
         ],
         'launch' => [
             'endpoint' => 'gamecenter/game/{id}/launch',
-            'method' => 'GET',
+            'method' => 'POST',
             'requires_authentication' => true,
             'required_parameters' => [
                 'id',
+            ],
+            'optional_parameters' => [
+                'anonymous',
+                'account_uuid',
+                'private',
             ],
         ],
     ];

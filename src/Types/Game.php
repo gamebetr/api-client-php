@@ -33,7 +33,7 @@ class Game extends BaseType
             ],
             'optional_parameters' => [
                 'anonymous',
-                'account_uuid',
+                'currency',
                 'private',
             ],
         ],

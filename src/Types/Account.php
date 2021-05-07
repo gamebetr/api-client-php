@@ -23,7 +23,7 @@ class Account extends BaseType
             'requires_authentication' => true,
         ],
         'find' => [
-            'endpoint' => 'bank/account/{id}',
+            'endpoint' => 'bank/account/{type}',
             'method' => 'GET',
             'requires_authentication' => true,
         ],

@@ -27,5 +27,15 @@ class Transaction extends BaseType
             'method' => 'GET',
             'requires_authentication' => true,
         ],
+        'transfer' => [
+            'endpoint' => 'bank/transfer',
+            'method' => 'POST',
+            'requires_authentication' => true,
+            'required_parameters' => [
+                'from',
+                'to',
+                'amount',
+            ],
+        ],
     ];
 }

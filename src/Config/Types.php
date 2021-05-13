@@ -10,6 +10,7 @@ use Gamebetr\ApiClient\Types\Balance;
 use Gamebetr\ApiClient\Types\Bank;
 use Gamebetr\ApiClient\Types\Currency;
 use Gamebetr\ApiClient\Types\Deposit;
+use Gamebetr\ApiClient\Types\Domain;
 use Gamebetr\ApiClient\Types\Error;
 use Gamebetr\ApiClient\Types\Game;
 use Gamebetr\ApiClient\Types\GameTransaction;
@@ -46,6 +47,8 @@ class Types extends BaseConfig
         'currencies' => Currency::class,
         'deposit' => Deposit::class,
         'deposits' => Deposit::class,
+        'domain' => Domain::class,
+        'domains' => Domain::class,
         'error' => Error::class,
         'errors' => Error::class,
         'game' => Game::class,

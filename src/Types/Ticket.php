@@ -20,12 +20,12 @@ class Ticket extends BaseType
         'list' => [
             'endpoint' => 'content',
             'method' => 'GET',
-            'requires_authentication' => false,
+            'requires_authentication' => true,
         ],
         'find' => [
             'endpoint' => 'content/{id}',
             'method' => 'GET',
-            'requires_authentication' => false,
+            'requires_authentication' => true,
         ],
         'create' => [
             'endpoint' => 'content',

@@ -105,6 +105,11 @@ abstract class BaseType implements Type
                 $this->relationships[$relation] = UtilityType::make($data);
             }
         }
+        if (isset($data->included)) {
+            foreach ($data->included as $included => $data) {
+                $this->relationships[$included] = UtilityType::make($data);
+            }
+        }
         if (isset($data->links)) {
             foreach ($data->links as $link => $data) {
                 $this->links[$link] = $data;

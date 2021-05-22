@@ -18,6 +18,7 @@ use Gamebetr\ApiClient\Types\Generic;
 use Gamebetr\ApiClient\Types\Image;
 use Gamebetr\ApiClient\Types\Provider;
 use Gamebetr\ApiClient\Types\Tag;
+use Gamebetr\ApiClient\Types\Ticket;
 use Gamebetr\ApiClient\Types\Transaction;
 use Gamebetr\ApiClient\Types\TwoFactor;
 use Gamebetr\ApiClient\Types\User;
@@ -62,6 +63,7 @@ class Types extends BaseConfig
         'providers' => Provider::class,
         'tag' => Tag::class,
         'tags' => Tag::class,
+        'ticket' => Ticket::class,
         'transaction' => Transaction::class,
         'transactions' => Transaction::class,
         'twoFactor' => TwoFactor::class,

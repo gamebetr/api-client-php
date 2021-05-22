@@ -1,6 +1,6 @@
 <?php
 
-namespace Gamebetr\ApiClient\Ticket;
+namespace Gamebetr\ApiClient\Types;
 
 use Gamebetr\ApiClient\Abstracts\BaseType;
 
@@ -18,21 +18,23 @@ class Ticket extends BaseType
      */
     protected $methods = [
         'list' => [
-            'endpoint' => 'content',
+            'endpoint' => 'support/ticket',
             'method' => 'GET',
             'requires_authentication' => true,
         ],
         'find' => [
-            'endpoint' => 'content/{id}',
+            'endpoint' => 'support/ticket/{id}',
             'method' => 'GET',
             'requires_authentication' => true,
         ],
         'create' => [
-            'endpoint' => 'content',
+            'endpoint' => 'support/ticket',
             'method' => 'POST',
             'requires_authentication' => true,
             'required_parameters' => [
-            ]
+                'title',
+                'body'
+            ],
         ],
     ];
 }

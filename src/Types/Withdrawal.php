@@ -35,21 +35,30 @@ class Withdrawal extends BaseType
             'method' => 'POST',
             'requires_authentication' => true,
             'required_parameters' => [
-                'symbol',
+                'currency',
                 'amount',
                 'address',
-            ],
-            'optional_parameters' => [
-                'external_id',
             ],
         ],
         'confirm' => [
             'endpoint' => 'paybetr/withdrawal/{id}/confirm',
-            'method' => 'POST',
+            'method' => 'GET',
             'requires_authentication' => true,
-            'required_parameters' => [
-                'token',
-            ],
+        ],
+        'cancel' => [
+            'endpoint' => 'paybetr/withdrawal/{id}/cancel',
+            'method' => 'GET',
+            'requires_authentication' => true,
+        ],
+        'approve' => [
+            'endpoint' => 'paybetr/withdrawal/{id}/approve',
+            'method' => 'GET',
+            'requires_authentication' => true,
+        ],
+        'refund' => [
+            'endpoint' => 'paybetr/withdrawal/{id}/refund',
+            'method' => 'GET',
+            'requires_authentication' => true,
         ],
     ];
 }

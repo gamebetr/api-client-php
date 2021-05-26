@@ -23,6 +23,7 @@ use Gamebetr\ApiClient\Types\Ticket;
 use Gamebetr\ApiClient\Types\Transaction;
 use Gamebetr\ApiClient\Types\TwoFactor;
 use Gamebetr\ApiClient\Types\User;
+use Gamebetr\ApiClient\Types\UserVariable;
 use Gamebetr\ApiClient\Types\Vocabulary;
 use Gamebetr\ApiClient\Types\Withdrawal;
 
@@ -73,6 +74,8 @@ class Types extends BaseConfig
         'twoFactors' => TwoFactor::class,
         'user' => User::class,
         'users' => User::class,
+        'userVariable' => UserVariable::class,
+        'userVariables' => UserVariable::class,
         'vocabulary' => Vocabulary::class,
         'vocabularies' => Vocabulary::class,
         'withdrawal' => Withdrawal::class,

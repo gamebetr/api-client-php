@@ -25,7 +25,7 @@ class UserVariable extends BaseType
             ],
         ],
         'create' => [
-            'endpoint' => 'user/variable',
+            'endpoint' => 'user/variables',
             'method' => 'POST',
             'requires_authentication' => true,
             'required_parameters' => [
@@ -34,7 +34,7 @@ class UserVariable extends BaseType
             ],
         ],
         'delete' => [
-            'endpoint' => 'user/variable/{variable}',
+            'endpoint' => 'user/variables/{variable}',
             'method' => 'POST',
             'requires_authentication' => true,
             'required_parameters' => [

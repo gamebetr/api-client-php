@@ -75,5 +75,15 @@ class User extends BaseType
                 'password',
             ],
         ],
+        'vip' => [
+            'endpoint' => 'user/vip',
+            'method' => 'GET',
+            'requires_authentication' => true,
+        ],
+        'affiliate' => [
+            'endpoint' => 'user/affiliate',
+            'method' => 'GET',
+            'requires_authentication' => true,
+        ],
     ];
 }

@@ -30,7 +30,6 @@ class UserVariable extends BaseType
             'requires_authentication' => true,
             'required_parameters' => [
                 'variable',
-                'value',
             ],
         ],
         'delete' => [

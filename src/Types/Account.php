@@ -27,5 +27,15 @@ class Account extends BaseType
             'method' => 'GET',
             'requires_authentication' => true,
         ],
+        'winloss' => [
+            'endpoint' => 'bank/account/{type}/winloss/{start}/{end}',
+            'method' => 'GET',
+            'requires_authentication' => true,
+            'required_parameters' => [
+                'type',
+                'start',
+                'end',
+            ],
+        ],
     ];
 }

@@ -5,6 +5,7 @@ namespace Gamebetr\ApiClient\Config;
 use Gamebetr\ApiClient\Abstracts\BaseConfig;
 use Gamebetr\ApiClient\Types\Account;
 use Gamebetr\ApiClient\Types\Address;
+use Gamebetr\ApiClient\Types\Affiliate;
 use Gamebetr\ApiClient\Types\AuthorizationToken;
 use Gamebetr\ApiClient\Types\Balance;
 use Gamebetr\ApiClient\Types\Bank;
@@ -24,6 +25,7 @@ use Gamebetr\ApiClient\Types\Transaction;
 use Gamebetr\ApiClient\Types\TwoFactor;
 use Gamebetr\ApiClient\Types\User;
 use Gamebetr\ApiClient\Types\UserVariable;
+use Gamebetr\ApiClient\Types\Vip;
 use Gamebetr\ApiClient\Types\Vocabulary;
 use Gamebetr\ApiClient\Types\Withdrawal;
 
@@ -38,6 +40,8 @@ class Types extends BaseConfig
         'accounts' => Account::class,
         'address' => Address::class,
         'addresses' => Address::class,
+        'affiliate' => Affiliate::class,
+        'affiliates' => Affiliate::class,
         'authorizationToken' => AuthorizationToken::class,
         'authorizationTokens' => AuthorizationToken::class,
         'balance' => Balance::class,
@@ -76,6 +80,8 @@ class Types extends BaseConfig
         'users' => User::class,
         'userVariable' => UserVariable::class,
         'userVariables' => UserVariable::class,
+        'vip' => Vip::class,
+        'vips' => Vip::class,
         'vocabulary' => Vocabulary::class,
         'vocabularies' => Vocabulary::class,
         'withdrawal' => Withdrawal::class,

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gamebetr\ApiClient\Tests;
+namespace Gamebetr\ApiClient\Tests\Abstracts;
 
 use Gamebetr\ApiClient\Types\Bank;
 use Gamebetr\ApiClient\Types\Collection;

@@ -16,8 +16,8 @@
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
-        "guzzlehttp/guzzle": "^6.5|^7.0"
+        "php": "^7.4 || ^8.0",
+        "guzzlehttp/guzzle": "^6.5 || ^7.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.18",
@@ -33,10 +33,10 @@
             "Gamebetr\\ApiClient\\Tests\\": "tests"
         }
     },
-    "scripts": {
-        "test": "./vendor/bin/phpunit",
-        "format": "./vendor/bin/php-cs-fixer fix --allow-risky=yes"
-    },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "scripts": {
+        "format": "./vendor/bin/php-cs-fixer fix --allow-risky=yes",
+        "test": "./vendor/bin/phpunit"
+    }
 }

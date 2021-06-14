@@ -70,53 +70,74 @@ abstract class BaseType implements Type
      * @param mixed $data
      * @return self
      */
-    public function parseData($data = null) : self
+    public function parseData($data = null): self
     {
         $this->initData = $data;
-        if (is_array($data)) {
-            foreach ($data as $attribute => $value) {
-                if ($attribute == 'id') {
-                    $this->id = $value;
-                } else {
-                    $this->attributes[$attribute] = $value;
-                }
-            }
+
+        if (empty($data)) {
             return $this;
         }
+
+        if (is_array($data)) {
+            $this->parseDataFromArray($data);
+
+            return $this;
+        }
+
         if (isset($data->data)) {
             $data = $data->data;
         }
         if (isset($data->id)) {
             $this->id = $data->id;
         }
-        if (isset($data->type) && ! $this->type) {
+        if (isset($data->type) && !$this->type) {
             $this->type = $data->type;
         }
         if (isset($data->attributes)) {
-            $this->attributes = (array) $data->attributes;
+            $this->attributes = (array)$data->attributes;
         }
-        if (isset($data->relationships)) {
-            foreach ($data->relationships as $relation => $data) {
-                $this->relationships[$relation] = UtilityType::make($data);
-            }
-        }
-        if (isset($data->related)) {
-            foreach ($data->related as $relation => $data) {
-                $this->relationships[$relation] = UtilityType::make($data);
-            }
-        }
-        if (isset($data->included)) {
-            foreach ($data->included as $included => $data) {
-                $this->relationships[$included] = UtilityType::make($data);
-            }
-        }
+
+        $this->parseRelationships((object)$data);
+
         if (isset($data->links)) {
-            foreach ($data->links as $link => $data) {
-                $this->links[$link] = $data;
-            }
+            $this->links = array_merge((array)$data->links, $this->links ?? []);
         }
 
         return $this;
+    }
+
+    /**
+     * Parse various relationships from an object based set of data.
+     *
+     * @param object $data
+     *   The data to parse.
+     */
+    protected function parseRelationships(object $data): void
+    {
+        foreach (['relationships', 'related', 'included'] as $key) {
+            if (isset($data->{$key})) {
+                foreach ($data->{$key} as $k => $v) {
+                    $this->relationships[$k] = UtilityType::make($v);
+                }
+            }
+        }
+    }
+
+    /**
+     * Parses an array based set of data.
+     *
+     * @param array $data
+     *   The data to parse.
+     */
+    protected function parseDataFromArray(array $data): void
+    {
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+            unset($data['id']);
+        }
+
+        // Preserve any existing attributes while adding new ones.
+        $this->attributes = array_merge($data, $this->attributes);
     }
 
     /**

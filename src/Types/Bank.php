@@ -4,6 +4,16 @@ namespace Gamebetr\ApiClient\Types;
 
 use Gamebetr\ApiClient\Abstracts\IntermediateJsonApiType;
 
+/**
+ *
+ * @method list
+ * @method find
+ * @method create
+ * @method update
+ * @method reportWinLoss
+ * @method reportWinLossTopUsersByTag
+ * @method reportWinLossByTag
+ */
 class Bank extends IntermediateJsonApiType
 {
     /**
@@ -39,6 +49,30 @@ class Bank extends IntermediateJsonApiType
             'method' => 'PUT',
             'requires_authentication' => true,
             'required_parameters' => [
+            ],
+        ],
+        'reportWinLoss' => [
+            'endpoint' => 'bank/{id}/reports/winloss',
+            'method' => 'GET',
+            'requires_authentication' => true,
+            'required_parameters' => [
+                'id',
+            ],
+        ],
+        'reportWinLossTopUsersByTag' => [
+            'endpoint' => 'bank/{id}/reports/winloss-top-by-tag',
+            'method' => 'GET',
+            'requires_authentication' => true,
+            'required_parameters' => [
+                'id',
+            ],
+        ],
+        'reportWinLossByTag' => [
+            'endpoint' => 'bank/{id}/reports/winloss-by-tag',
+            'method' => 'GET',
+            'requires_authentication' => true,
+            'required_parameters' => [
+                'id',
             ],
         ],
     ];

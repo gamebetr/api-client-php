@@ -27,6 +27,7 @@ use Gamebetr\ApiClient\Types\User;
 use Gamebetr\ApiClient\Types\UserVariable;
 use Gamebetr\ApiClient\Types\Vip;
 use Gamebetr\ApiClient\Types\Vocabulary;
+use Gamebetr\ApiClient\Types\WinLossReport;
 use Gamebetr\ApiClient\Types\Withdrawal;
 
 class Types extends BaseConfig
@@ -84,6 +85,8 @@ class Types extends BaseConfig
         'vips' => Vip::class,
         'vocabulary' => Vocabulary::class,
         'vocabularies' => Vocabulary::class,
+        'winLossReport' => WinLossReport::class,
+        'winLossReports' => WinLossReport::class,
         'withdrawal' => Withdrawal::class,
         'withdrawals' => Withdrawal::class,
     ];

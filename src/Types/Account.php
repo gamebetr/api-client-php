@@ -44,8 +44,8 @@ class Account extends BaseType
                 'end',
             ],
         ],
-        'reportWinLossByTag' => [
-            'endpoint' => 'bank/account/{type}/reports/winloss-by-tag',
+        'reportWinLossByTags' => [
+            'endpoint' => 'bank/account/{type}/reports/winloss-by-tags',
             'method' => 'GET',
             'requires_authentication' => true,
             'required_parameters' => [

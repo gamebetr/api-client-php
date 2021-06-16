@@ -67,8 +67,8 @@ class Bank extends IntermediateJsonApiType
                 'id',
             ],
         ],
-        'reportWinLossByTag' => [
-            'endpoint' => 'bank/{id}/reports/winloss-by-tag',
+        'reportWinLossByTags' => [
+            'endpoint' => 'bank/{id}/reports/winloss-by-tags',
             'method' => 'GET',
             'requires_authentication' => true,
             'required_parameters' => [

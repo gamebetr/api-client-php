@@ -35,7 +35,7 @@ class Account extends BaseType
             'requires_authentication' => true,
         ],
         'reportWinLoss' => [
-            'endpoint' => 'bank/account/{type}/reports/winloss/{start}/{end}',
+            'endpoint' => 'bank/account/{type}/reports/win-loss/{start}/{end}',
             'method' => 'GET',
             'requires_authentication' => true,
             'required_parameters' => [
@@ -45,7 +45,7 @@ class Account extends BaseType
             ],
         ],
         'reportWinLossByTags' => [
-            'endpoint' => 'bank/account/{type}/reports/winloss-by-tags',
+            'endpoint' => 'bank/account/{type}/reports/win-loss-by-tags',
             'method' => 'GET',
             'requires_authentication' => true,
             'required_parameters' => [

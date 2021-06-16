@@ -52,7 +52,7 @@ class Bank extends IntermediateJsonApiType
             ],
         ],
         'reportWinLoss' => [
-            'endpoint' => 'bank/{id}/reports/winloss',
+            'endpoint' => 'bank/{id}/reports/win-loss',
             'method' => 'GET',
             'requires_authentication' => true,
             'required_parameters' => [
@@ -60,7 +60,7 @@ class Bank extends IntermediateJsonApiType
             ],
         ],
         'reportWinLossTopUsersByTag' => [
-            'endpoint' => 'bank/{id}/reports/winloss-top-by-tag',
+            'endpoint' => 'bank/{id}/reports/win-loss-top-by-tag',
             'method' => 'GET',
             'requires_authentication' => true,
             'required_parameters' => [
@@ -68,7 +68,7 @@ class Bank extends IntermediateJsonApiType
             ],
         ],
         'reportWinLossByTags' => [
-            'endpoint' => 'bank/{id}/reports/winloss-by-tags',
+            'endpoint' => 'bank/{id}/reports/win-loss-by-tags',
             'method' => 'GET',
             'requires_authentication' => true,
             'required_parameters' => [

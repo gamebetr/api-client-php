@@ -4,6 +4,13 @@ namespace Gamebetr\ApiClient\Types;
 
 use Gamebetr\ApiClient\Abstracts\BaseType;
 
+/**
+ *
+ * @method list
+ * @method find
+ * @method reportWinLoss
+ * @method reportWinLossByTag
+ */
 class Account extends BaseType
 {
     /**
@@ -27,14 +34,22 @@ class Account extends BaseType
             'method' => 'GET',
             'requires_authentication' => true,
         ],
-        'winloss' => [
-            'endpoint' => 'bank/account/{type}/winloss/{start}/{end}',
+        'reportWinLoss' => [
+            'endpoint' => 'bank/account/{type}/reports/win-loss/{start}/{end}',
             'method' => 'GET',
             'requires_authentication' => true,
             'required_parameters' => [
                 'type',
                 'start',
                 'end',
+            ],
+        ],
+        'reportWinLossByTags' => [
+            'endpoint' => 'bank/account/{type}/reports/win-loss-by-tags',
+            'method' => 'GET',
+            'requires_authentication' => true,
+            'required_parameters' => [
+                'type',
             ],
         ],
     ];

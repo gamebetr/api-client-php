@@ -85,10 +85,34 @@ class Client
     protected $limit;
 
     /**
+     * Page Size (instead of limit)
+     * @var int
+     */
+    protected $pageSize;
+
+    /**
      * Offset
      * @var int
      */
     protected $offset;
+
+    /**
+     * Page Number (instead of offset)
+     * @var int
+     */
+    protected $pageNumber;
+
+    /**
+     * Tags
+     * @var string
+     */
+    protected $tags;
+
+    /**
+     * Vocabulary
+     * @var string
+     */
+    protected $vocabulary;
 
     /**
      * Raw response.
@@ -365,12 +389,48 @@ class Client
     }
 
     /**
+     * Get page size.
+     * @return int|null
+     */
+    public function getPageSize() : ?int
+    {
+        return $this->pageSize;
+    }
+
+    /**
      * Get offset.
      * @return int|null
      */
     public function getOffset() : ?int
     {
         return $this->offset;
+    }
+
+    /**
+     * Get page number.
+     * @return int|null
+     */
+    public function getPageNumber() : ?int
+    {
+        return $this->pageNumber;
+    }
+
+    /**
+     * Get tags.
+     * @return string|null
+     */
+    public function getTags() : ?string
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Get vocabulary.
+     * @return string|null
+     */
+    public function getVocabulary() : ?string
+    {
+        return $this->vocabulary;
     }
 
     /**
@@ -487,6 +547,18 @@ class Client
     }
 
     /**
+     * Page size.
+     * @param int $size
+     * @return self
+     */
+    public function pageSize(int $size) : self
+    {
+        $this->pageSize = $size;
+
+        return $this;
+    }
+
+    /**
      * Offset.
      * @param int $offset
      * @return self
@@ -494,6 +566,46 @@ class Client
     public function offset(int $offset) : self
     {
         $this->offset = $offset;
+
+        return $this;
+    }
+
+    /**
+     * Page number.
+     * @param int $number
+     * @return self
+     */
+    public function pageNumber(int $number) : self
+    {
+        $this->pageNumber = $number;
+
+        return $this;
+    }
+
+    /**
+     * Tags.
+     * @param string $tags
+     * @param string $vocabulary
+     * @return self
+     */
+    public function tags(string $tags, $vocabulary = null) : self
+    {
+        $this->tags = $tags;
+        if ($vocabulary) {
+            $this->vocabulary = $vocabulary;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Vocabulary.
+     * @param string $vocabulary
+     * @return self
+     */
+    public function vocabulary(string $vocabulary) : self
+    {
+        $this->vocabulary = $vocabulary;
 
         return $this;
     }
@@ -517,8 +629,25 @@ class Client
         if ($this->limit) {
             $query['page']['size'] = $this->limit;
         }
+        // override $this->limit with $this->pageSize
+        if ($this->pageSize) {
+            $query['page']['size'] = $this->pageSize;
+        }
         if ($this->offset) {
-            $query['page']['number'] = $this->offset / $this->limit;
+            if ($limit = $this->limit ?? $this->pageSize) {
+                $query['page']['number'] = $this->offset / $limit;
+            }
+            $query['page']['number'] = 1;
+        }
+        // override $this->offset with $this->pageNumber
+        if ($this->pageNumber) {
+            $query['page']['number'] = $this->pageNumber;
+        }
+        if ($this->tags) {
+            $query['filter']['tags'][0]['name'] = $this->tags;
+        }
+        if ($this->vocabulary) {
+            $query['filter']['tags'][0]['vocabulary'] = $this->vocabulary;
         }
 
         return $query;

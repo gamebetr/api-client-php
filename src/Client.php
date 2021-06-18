@@ -654,10 +654,10 @@ class Client
     }
 
     /**
-     * Make an api request.
-     * @return \Gamebetr\ApiClient\Contracts\Type
+     * Get request.
+     * @return array
      */
-    public function get() : Type
+    public function getRequest() : array
     {
         $options = [
             'headers' => $this->getRequestHeaders(),
@@ -665,11 +665,22 @@ class Client
             'query' => $this->getQuery(),
         ];
         if ($this->requiresAuth) {
-            if (! $this->api->apiToken) {
+            if (!$this->api->apiToken) {
                 throw new InvalidApiToken();
             }
             $options['headers']['Authorization'] = 'Bearer '.$this->api->apiToken;
         }
+
+        return $options;
+    }
+
+    /**
+     * Make an api request.
+     * @return \Gamebetr\ApiClient\Contracts\Type
+     */
+    public function get() : Type
+    {
+        $options = $this->getRequest();
         try {
             $data = $this->client->request($this->getRequestMethod(), $this->getUrl(), $options)->getBody()->getContents();
         } catch (RequestException $e) {

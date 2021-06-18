@@ -515,10 +515,10 @@ class Client
             $query['sort'] = implode(',', $this->sorts);
         }
         if ($this->limit) {
-            $query['limit'] = $this->limit;
+            $query['page']['size'] = $this->limit;
         }
         if ($this->offset) {
-            $query['offset'] = $this->offset;
+            $query['page']['number'] = $this->offset / $this->limit;
         }
 
         return $query;

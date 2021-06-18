@@ -18,7 +18,7 @@ class Domain extends BaseType
      */
     protected $methods = [
         'list' => [
-            'endpoint' => 'globalauth/domains',
+            'endpoint' => 'admin/domains',
             'method' => 'GET',
             'requires_authentication' => true,
         ],

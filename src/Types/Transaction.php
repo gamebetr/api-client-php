@@ -2,9 +2,9 @@
 
 namespace Gamebetr\ApiClient\Types;
 
-use Gamebetr\ApiClient\Abstracts\BaseType;
+use Gamebetr\ApiClient\Abstracts\IntermediateJsonApiType;
 
-class Transaction extends BaseType
+class Transaction extends IntermediateJsonApiType
 {
     /**
      * Type.

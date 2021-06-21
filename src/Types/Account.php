@@ -2,7 +2,7 @@
 
 namespace Gamebetr\ApiClient\Types;
 
-use Gamebetr\ApiClient\Abstracts\BaseType;
+use Gamebetr\ApiClient\Abstracts\IntermediateJsonApiType;
 
 /**
  *
@@ -11,7 +11,7 @@ use Gamebetr\ApiClient\Abstracts\BaseType;
  * @method reportWinLoss
  * @method reportWinLossByTag
  */
-class Account extends BaseType
+class Account extends IntermediateJsonApiType
 {
     /**
      * Type.

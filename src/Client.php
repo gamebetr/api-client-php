@@ -109,6 +109,13 @@ class Client
     protected $tags;
 
     /**
+     * Boolean parameters.
+     *
+     * @var bool[]
+     */
+    protected $booleans;
+
+    /**
      * Vocabulary
      * @var string
      */
@@ -449,6 +456,7 @@ class Client
         $this->filters = [];
         $this->includes = [];
         $this->sorts = [];
+        $this->booleans = [];
         $this->requiresAuth = true;
         $this->limit = null;
         $this->offset = null;
@@ -599,6 +607,40 @@ class Client
     }
 
     /**
+     * Add a boolean query parameter.
+     *
+     * @param string $key
+     *   The parameter name.
+     * @param $value
+     *   The parameter value. One of 1, true, on, yes. All other values are
+     *   treated as false.
+     *
+     * @return $this
+     */
+    public function boolean(string $key, $value): self
+    {
+        $this->booleans[$key] = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+
+        return $this;
+    }
+
+    /**
+     * Add multiple booleans to the request.
+     *
+     * @param array $booleans
+     *   A key value array of booleans.
+     *
+     * @return $this
+     */
+    public function booleans(array $booleans): self
+    {
+        foreach ($booleans as $key => $value) {
+            $this->boolean($key, $value);
+        }
+        return $this;
+    }
+
+    /**
      * Vocabulary.
      * @param string $vocabulary
      * @return self
@@ -648,6 +690,13 @@ class Client
         }
         if ($this->vocabulary) {
             $query['filter']['tags'][0]['vocabulary'] = $this->vocabulary;
+        }
+        if ($this->booleans) {
+            foreach ($this->booleans as $key => $value) {
+                if (!isset($query[$key])) {
+                    $query[$key] = $value;
+                }
+            }
         }
 
         return $query;

@@ -65,6 +65,11 @@ class User extends BaseType
             'method' => 'GET',
             'requires_authentication' => true,
         ],
+        'adminupdate' => [
+            'endpoint' => 'user/{id}',
+            'method' => 'POST',
+            'requires_authentication' => true,
+        ],
         'create' => [
             'endpoint' => 'user/create',
             'method' => 'POST',

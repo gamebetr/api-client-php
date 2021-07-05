@@ -18,12 +18,12 @@ class Currency extends BaseType
      */
     protected $methods = [
         'list' => [
-            'endpoint' => 'paybetr/currency',
+            'endpoint' => 'bank/currency',
             'method' => 'GET',
             'requires_authentication' => true,
         ],
         'find' => [
-            'endpoint' => 'paybetr/currency/{symbol}',
+            'endpoint' => 'bank/currency/{symbol}',
             'method' => 'GET',
             'requires_authentication' => true,
             'required_parameters' => [

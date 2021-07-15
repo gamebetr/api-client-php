@@ -39,6 +39,14 @@ class Account extends IntermediateJsonApiType
             'method' => 'GET',
             'requires_authentication' => true,
         ],
+        'moonpay' => [
+            'endpoint' => 'paybetr/moonpay',
+            'method' => 'POST',
+            'requires_authentication' => true,
+            'required_parameters' => [
+                'currency',
+            ],
+        ],
         'reportWinLoss' => [
             'endpoint' => 'bank/account/{type}/reports/win-loss/{start}/{end}',
             'method' => 'GET',

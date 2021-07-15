@@ -34,6 +34,11 @@ class Account extends IntermediateJsonApiType
             'method' => 'GET',
             'requires_authentication' => true,
         ],
+        'primary' => [
+            'endpoint' => 'bank/account/{type}/primary',
+            'method' => 'GET',
+            'requires_authentication' => true,
+        ],
         'reportWinLoss' => [
             'endpoint' => 'bank/account/{type}/reports/win-loss/{start}/{end}',
             'method' => 'GET',

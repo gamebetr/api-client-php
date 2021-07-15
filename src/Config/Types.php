@@ -16,6 +16,7 @@ use Gamebetr\ApiClient\Types\Error;
 use Gamebetr\ApiClient\Types\Game;
 use Gamebetr\ApiClient\Types\GameTransaction;
 use Gamebetr\ApiClient\Types\Generic;
+use Gamebetr\ApiClient\Types\Hold;
 use Gamebetr\ApiClient\Types\Host;
 use Gamebetr\ApiClient\Types\Image;
 use Gamebetr\ApiClient\Types\Provider;
@@ -64,6 +65,8 @@ class Types extends BaseConfig
         'gameTransaction' => GameTransaction::class,
         'gameTransactions' => GameTransaction::class,
         'generic' => Generic::class,
+        'hold' => Hold::class,
+        'holds' => Hold::class,
         'host' => Host::class,
         'hosts' => Host::class,
         'image' => Image::class,
